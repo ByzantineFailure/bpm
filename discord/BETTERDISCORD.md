@@ -17,6 +17,7 @@ Download `betterDiscord-bpm.plugin.js`.
 Move the `betterDiscord-bpm.plugin.js` file into BetterDiscord's plugin directory.
 * Windows: `%APPDATA%/BetterDiscord/plugins`
 * Mac: `~/Library/Preferences/BetterDiscord/plugins`
+* Linux: `~/.config/BetterDiscord/plugins`
 
 Restart Discord after doing this and you should be in business.
 

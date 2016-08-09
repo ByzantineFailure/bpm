@@ -1,7 +1,5 @@
 @echo off
 REM Just run a powershell command.
-SET ScriptDir=%~dp0
-Set ScriptLocation=%ScriptDir%win_ps.ps1
-powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "& '%ScriptLocation%' -isPTB"
+powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "& '%~dp0%win_ps.ps1' -isPTB"
 pause
 

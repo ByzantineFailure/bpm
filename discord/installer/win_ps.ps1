@@ -1,5 +1,6 @@
 param (
-    [switch]$isPTB = $false
+    [switch]$isPTB = $false,
+    [switch]$consent =$false
 )
 
 $node_url = "https://nodejs.org/dist/v4.2.4/win-x86/node.exe"
@@ -13,8 +14,14 @@ function Download-Node {
     Write-Host "Node.js v4.2.4 (about 11 MB) to run the install script then delete it right"
     Write-Host "after it runs? (Installer will quit without installing if it is not)"
     Write-Host "Press Y if it is okay (any other key if not)"
-    $key = [Console]::ReadKey($true)
-    if($key.Key -eq 'y') {
+    
+    if($consent){
+        Write-Host "You have auto-matically consented because of a command flag."
+        } else {
+        $key = [Console]::ReadKey($true)
+    }
+
+    if($key.Key -eq 'y' -or $consent) {
         Write-Host "Downloading Node.js v4.2.4 standalone binary..."
         $wc = New-Object System.Net.WebClient
         $wc.DownloadFile($node_url, $node_output)

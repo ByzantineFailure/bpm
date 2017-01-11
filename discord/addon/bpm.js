@@ -7,6 +7,9 @@ if(window.localStorage === undefined) {
     window.localStorage = iframe.contentWindow.localStorage;
 }
 
+// BetterDiscord pls.
+window.localStorage = bdPluginStorage || window.localStorage;
+
 require('./updates/updates.js');
 require('./settings/settings.js');
 require('./core/core.js');

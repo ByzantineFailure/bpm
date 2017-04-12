@@ -1,6 +1,6 @@
 /**
  * BPM for Discord
- * (c) 2015-2016 ByzantineFailure 
+ * (c) 2015-2017 ByzantineFailure 
  * 
  * Settings panel.  Sets up the tab in Discord settings, as well as 
  * handling switching between subpanels.  Manages teardown.
@@ -31,7 +31,10 @@ var BPM_utils = require('../utils.js'),
     subreddits = require('./subreddits.js'),
     search = require('./search.js'),
     updates = require('./updates.js'),
-    about = require('./about.js');
+    about = require('./about.js'),
+    // fragile
+    INJECTION_POINT_SELECTOR = 
+        '.layer > .ui-standard-sidebar-view > .content-region > .scroller-wrap > .scroller > .content-column';
 
 //Maps subpanel requests to their corresponding init/teardown objects
 var subpanelMap = {
@@ -43,18 +46,28 @@ var subpanelMap = {
     insert_about: about
 };
 
+// we now observe on `.app > .layers` 
+// look for `.ui-standard-sidebar-view`
 var settingsObserver = new MutationObserver(function(mutations) {
+    // Create our settings element and insert it before the logout button w/ a separator
     function addTabElement(tabBar) {
         var tabElement = document.createElement('div');
-        tabElement.className = 'tab-bar-item';
+        tabElement.className = 'ui-tab-bar-item';
         tabElement.innerHTML = 'BPM';
         tabElement.id = 'bpm-settings-tab-item';
-        tabBar.appendChild(tabElement);
+       
+        var tabSeparator = document.createElement('div');
+        tabSeparator.className = 'ui-tab-bar-separator margin-top-8 margin-bottom-8';
+        
+        var logoutButton = document.querySelector('.ui-tab-bar-item.danger');
+        var tabBar = document.querySelector('.ui-tab-bar');
+        tabBar.insertBefore(tabSeparator, logoutButton);
+        tabBar.insertBefore(tabElement, tabSeparator);
     }
 
     function addTabAndListeners(tabBar) {
         addTabElement(tabBar);
-        var items = document.getElementsByClassName('tab-bar-item');
+        var items = document.getElementsByClassName('ui-tab-bar-item');
         Array.prototype.forEach.call(items, function(item) {
             item.addEventListener('click', function() { 
                 focusTabElement(item); 
@@ -64,15 +77,18 @@ var settingsObserver = new MutationObserver(function(mutations) {
     }
 
     mutations.forEach(function(mutation) {
-        if(mutation.type != 'childList' || mutation.addedNodes.length === 0) {
+        // Return if we're not adding the options layer
+        if(mutation.type != 'childList' || 
+           mutation.addedNodes.length === 0 || 
+           !mutation.addedNodes[0].querySelector('.layer > .ui-standard-sidebar-view')) {
             return;
         }
         var addedNode = mutation.addedNodes[0];
-        if(!addedNode.querySelector || !addedNode.querySelector('.user-settings-modal')) {
+        if(!addedNode.querySelector || !addedNode.querySelector('.layer > .ui-standard-sidebar-view')) {
             return;
         }
-        BPM_utils.waitForElementByClass('tab-bar SIDE', addTabAndListeners);
-        BPM_utils.waitForElementByClass('settings-inner', injectSettingsPage);
+        BPM_utils.waitForElementByClass('ui-tab-bar SIDE', addTabAndListeners);
+        BPM_utils.waitByQuerySelector(INJECTION_POINT_SELECTOR, injectSettingsPage);
     });
 });
 
@@ -80,7 +96,6 @@ function injectSettingsPage(injectInto) {
     if(document.getElementById('bpm-settings-panel')) return;
     
     var toInject = document.createElement('div');
-    toInject.className = 'scroller-wrap';
     toInject.id = 'bpm-settings-panel';
     toInject.style.display = 'none';
     toInject.innerHTML = basePanelHtml;
@@ -168,86 +183,49 @@ function selectSubpanel(selector, performTeardown) {
     content.innerHTML = subpanel.html;
     injectTarget.appendChild(content);
 
-    focusTabElement(selector);
+    focusTabElement(selector, true);
 
     subpanel.init(content);
 }
 
-function focusTabElement(element) {
-    var settingsItems = element.parentElement.getElementsByClassName('tab-bar-item');
+function focusTabElement(element, subpanelSelector) {
+    var className = subpanelSelector ? 'tab-bar-item' : 'ui-tab-bar-item';
+    var settingsItems = element.parentElement.getElementsByClassName(className);
     Array.prototype.forEach.call(settingsItems, function(item) {
-        item.className = 'tab-bar-item';
+        item.className = item.className.replace('selected', '');
     });
     element.className += ' selected';
 }
 
 function showSettings(display) {
-    var settingsInner = document.getElementsByClassName('settings-inner')[0];
+    var settingsInner = document.querySelector(INJECTION_POINT_SELECTOR);
     if(!settingsInner) {
-        console.log('BPM: Called showSettings when settingsInner does not exist!');
+        console.log('BPM: Called showSettings when injection point does not exist!');
         return;
     }
     BPM_utils.waitForElementById('bpm-settings-panel', toggleSettingsDisplay);
     function toggleSettingsDisplay(settings) {
         if(display) {
             settingsInner.firstChild.style.display = 'none';
-            settings.style.display = 'flex';
+            settings.style.display = '';
         } else {
-            settingsInner.firstChild.style.display = 'flex';
+            settingsInner.firstChild.style.display = '';
             settings.style.display = 'none';
         } 
     }
 }
 
-/*
- Old Implementation -- I'm keeping this around because I'd like to be able to
- quickly revert to it in the event the new MutationObserver version is subtly broken.
-
-function injectBpmSettingsPanel(settingsButton) {
-    function addTabElement(tabBar) {
-        var tabElement = document.createElement('div');
-        tabElement.className = 'tab-bar-item';
-        tabElement.innerHTML = 'BPM';
-        tabElement.id = 'bpm-settings-tab-item';
-        tabBar.appendChild(tabElement);
-    }
-
-    function addTabAndListeners(tabBar) {
-        addTabElement(tabBar);
-        var items = document.getElementsByClassName('tab-bar-item');
-        Array.prototype.forEach.call(items, function(item) {
-            item.addEventListener('click', function() { 
-                focusTabElement(item); 
-                showSettings(item.id == 'bpm-settings-tab-item');
-            }, false);
-        });
-    }
-
-    settingsButton.addEventListener('click', function() {
-        BPM_utils.waitForElementByClass('tab-bar SIDE', addTabAndListeners);
-        BPM_utils.waitForElementByClass('settings-inner', injectSettingsPage);
-    });
-}
-
-
-BPM_utils.waitForElementByClass('btn btn-settings', injectBpmSettingsPanel);
-*/
-
-//Not exactly the greatest way to do this, need to figure out some non-timeout based
-//way to ensure we have the modal spans.
-//I don't like the shotgun approach here (all subtree changes to the approot) but 
-//after BD broke I can't find a better way
 BPM_utils.waitForElementById('app-mount', function(mount) {
     window.setTimeout(function(){
         var observerConfig = {
                 childList: true,
-                subtree: true,
+                subtree: false,
                 attributes: false,
                 characterData: false
             }, 
-            reactRoot = document.querySelector('div[data-reactroot]');
+            layersRoot = document.querySelector('.app > .layers');
         
-        settingsObserver.observe(reactRoot, observerConfig);
+        settingsObserver.observe(layersRoot, observerConfig);
     }, 100);
 });
 

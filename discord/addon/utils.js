@@ -10,7 +10,8 @@ module.exports = {
     setOption: setOption,
     retrievePrefs: retrievePrefs,
     waitForElementById: waitForElementById,
-    waitForElementByClass: waitForElementByClass
+    waitForElementByClass: waitForElementByClass,
+    waitByQuerySelector: waitByQuerySelector
 };
 
 function waitForElementByClass(elementClass, callback) {
@@ -26,6 +27,15 @@ function waitForElementById(id, callback) {
     var element = document.getElementById(id);
     if(!element) {
         window.setTimeout(function() { waitForElementById(id, callback); }, 100);
+    } else {
+        callback(element);
+    }
+}
+
+function waitByQuerySelector(selector, callback) {
+    var element = document.querySelector(selector);
+    if(!element) {
+        window.setTimeout(function() { waitForElementById(selector, callback); }, 100);
     } else {
         callback(element);
     }

@@ -1,83 +1,96 @@
-<div class="control-group">
-    <label>General</label>
-    <ul class="checkbox-group">
-        <li>
-            <div class="checkbox">
-                <div class="checkbox-inner">
-                    <input type="checkbox" data-bpmOption="enableGlobalEmotes">
-                    <span></span>
-                </div>
-                <span>Enable BPM (requires restart)</span>
-            </div>
-        </li>
-        <li>
-            <div class="checkbox">
-                <div class="checkbox-inner">
-                    <input type="checkbox" data-bpmOption="enableNSFW">
-                    <span></span>
-                </div>
-                <span>Enable NSFW emotes</span>
-            </div>
-        </li>
-        <li>
-            <div class="checkbox">
-                <div class="checkbox-inner">
-                    <input type="checkbox" data-bpmOption="enableExtraCSS">
-                    <span></span>
-                </div>
-                <span>Enable extra emote modifiers (multi-dimensional spin, etc.)</span>
-            </div>
-        </li>
-    </ul>
+<div class="ui-form-item">
+    <h5 class="ui-form-title h5 margin-reset margin-bottom-8">General</h5>
+    <div class="ui-flex flex-horizontal flex-justify-between flex-align-center flex-nowrap margin-bottom-20">
+        <div class="ui-flex flex-horizontal flex-justify-start flex-align-stretch flex-nowrap" style="flex: 0 1 auto;">
+            <h3 class="ui-form-title h3 margin-reset ui-flex-child">Enable BPM (requries restart)</h3>
+        </div>
+        <div class="ui-flex-child" style="flex: 0 1 auto;">
+            <label class="ui-switch-wrapper">
+                    <input class="ui-switch-checkbox" type="checkbox" data-bpmOption="enableGlobalEmotes">
+                    <div class="ui-switch"></div>
+            </label>
+        </div>
+    </div>
+    <div class="ui-flex flex-horizontal flex-justify-between flex-align-center flex-nowrap margin-bottom-20">
+        <div class="ui-flex flex-horizontal flex-justify-start flex-align-stretch flex-nowrap" style="flex: 0 1 auto;">
+            <h3 class="ui-form-title h3 margin-reset ui-flex-child">Enable NSFW emotes</h3>
+        </div>
+        <div class="ui-flex-child" style="flex: 0 1 auto;">
+            <label class="ui-switch-wrapper">
+                    <input class="ui-switch-checkbox" type="checkbox" data-bpmOption="enableNSFW">
+                    <div class="ui-switch"></div>
+            </label>
+        </div>
+    </div>
+    <div class="ui-flex flex-horizontal flex-justify-between flex-align-center flex-nowrap margin-bottom-20">
+        <div class="ui-flex flex-horizontal flex-justify-start flex-align-stretch flex-nowrap" style="flex: 0 1 auto;">
+            <h3 class="ui-form-title h3 margin-reset ui-flex-child">Enable extra emote modifiers (multi-dimensional spin, etc.)</h3>
+        </div>
+        <div class="ui-flex-child" style="flex: 0 1 auto;">
+            <label class="ui-switch-wrapper">
+                    <input class="ui-switch-checkbox" type="checkbox" data-bpmOption="enableExtraCSS">
+                    <div class="ui-switch"></div>
+            </label>
+        </div>
+    </div>
 </div>
-<div class="control-group">
-    <label>Display</label>
-    <ul class="checkbox-group">
-        <li>
-            <div class="checkbox">
-                <div class="checkbox-inner">
-                    <input type="checkbox" data-bpmOption="disableDisruptiveEmotes" data-bpmDiscordSpecific="true">
-                    <span></span>
-                </div>
-                <span>Disable emotes in usernames and server names</span>
-            </div>
-        </li>
-        <li>
-            <div class="checkbox">
-                <div class="checkbox-inner">
-                    <input type="checkbox" data-bpmOption="disableEmotesInCodeBlocks" data-bpmDiscordSpecific="true">
-                    <span></span>
-                </div>
-                <span>Disable emotes in code blocks</span>
-            </div>
-        </li>
-        <li>
-            <div class="checkbox">
-                <div class="checkbox-inner">
-                    <input type="checkbox" data-bpmOption="showUnknownEmotes">
-                    <span></span>
-                </div>
-                <span>Show unknown emotes</span>
-            </div>
-        </li>
-        <li>
-            <div class="checkbox">
-                <div class="checkbox-inner">
-                    <input type="checkbox" data-bpmOption="hideDisabledEmotes">
-                    <span></span>
-                </div>
-                <span>Hide disabled emotes</span>
-            </div>
-        </li>
-        <li>
-            <div class="checkbox">
-                <div class="checkbox-inner">
-                    <input type="checkbox" data-bpmOption="showAltText">
-                    <span></span>
-                </div>
-                <span>Show alt text</span>
-            </div>
-        </li>
-    </ul>
+<div class="ui-form-divider margin-top-20 margin-bottom-20" style="flex: 1 1 auto;"></div>
+<div class="ui-form-item">
+    <h5 class="ui-form-title h5 margin-reset margin-bottom-8">Display</h5>
+    <div class="ui-flex flex-horizontal flex-justify-between flex-align-center flex-nowrap margin-bottom-20">
+        <div class="ui-flex flex-horizontal flex-justify-start flex-align-stretch flex-nowrap" style="flex: 0 1 auto;">
+            <h3 class="ui-form-title h3 margin-reset ui-flex-child">Disable emotes in usernames and server names</h3>
+        </div>
+        <div class="ui-flex-child" style="flex: 0 1 auto;">
+            <label class="ui-switch-wrapper">
+                    <input class="ui-switch-checkbox" type="checkbox" data-bpmOption="disableDisruptiveEmotes" data-bpmDiscordSpecific="true">
+                    <div class="ui-switch"></div>
+            </label>
+        </div>
+    </div>
+    <div class="ui-flex flex-horizontal flex-justify-between flex-align-center flex-nowrap margin-bottom-20">
+        <div class="ui-flex flex-horizontal flex-justify-start flex-align-stretch flex-nowrap" style="flex: 0 1 auto;">
+            <h3 class="ui-form-title h3 margin-reset ui-flex-child">Disable emotes in code blocks</h3>
+        </div>
+        <div class="ui-flex-child" style="flex: 0 1 auto;">
+            <label class="ui-switch-wrapper">
+                    <input class="ui-switch-checkbox" type="checkbox" data-bpmOption="disableEmotesInCodeBlocks" data-bpmDiscordSpecific="true">
+                    <div class="ui-switch"></div>
+            </label>
+        </div>
+    </div>
+    <div class="ui-flex flex-horizontal flex-justify-between flex-align-center flex-nowrap margin-bottom-20">
+        <div class="ui-flex flex-horizontal flex-justify-start flex-align-stretch flex-nowrap" style="flex: 0 1 auto;">
+            <h3 class="ui-form-title h3 margin-reset ui-flex-child">Show unknown emotes</h3>
+        </div>
+        <div class="ui-flex-child" style="flex: 0 1 auto;">
+            <label class="ui-switch-wrapper">
+                    <input class="ui-switch-checkbox" type="checkbox" data-bpmOption="showUnknownEmotes">
+                    <div class="ui-switch"></div>
+            </label>
+        </div>
+    </div>
+    <div class="ui-flex flex-horizontal flex-justify-between flex-align-center flex-nowrap margin-bottom-20">
+        <div class="ui-flex flex-horizontal flex-justify-start flex-align-stretch flex-nowrap" style="flex: 0 1 auto;">
+            <h3 class="ui-form-title h3 margin-reset ui-flex-child">Hide disabled emotes</h3>
+        </div>
+        <div class="ui-flex-child" style="flex: 0 1 auto;">
+            <label class="ui-switch-wrapper">
+                    <input class="ui-switch-checkbox" type="checkbox" data-bpmOption="hideDisabledEmotes">
+                    <div class="ui-switch"></div>
+            </label>
+        </div>
+    </div>
+    <div class="ui-flex flex-horizontal flex-justify-between flex-align-center flex-nowrap margin-bottom-20">
+        <div class="ui-flex flex-horizontal flex-justify-start flex-align-stretch flex-nowrap" style="flex: 0 1 auto;">
+            <h3 class="ui-form-title h3 margin-reset ui-flex-child">Show alt text</h3>
+        </div>
+        <div class="ui-flex-child" style="flex: 0 1 auto;">
+            <label class="ui-switch-wrapper">
+                    <input class="ui-switch-checkbox" type="checkbox" data-bpmOption="showAltText">
+                    <div class="ui-switch"></div>
+            </label>
+        </div>
+    </div>
 </div>
 

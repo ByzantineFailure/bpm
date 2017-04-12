@@ -4,8 +4,7 @@
 }
 
 .bpm-about-footer {
-    padding-left: 180px;
-    padding-top: 25px;
+    text-align: center;
 }
 
 #bpm-settings-subpanel > .control-group > input[type=number]::-webkit-inner-spin-button,

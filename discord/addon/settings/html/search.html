@@ -1,16 +1,20 @@
-<div class="control-group">
-    <ul class="checkbox-group">
-        <li>
-            <div class="checkbox">
-                <div class="checkbox-inner">
-                    <input type="checkbox" data-bpmOption="searchButtonTopRight">
-                    <span></span>
-                </div>
-                    <span>Show search button top right (requires restart)</span>
-            </div>
-        </li>
-    </ul>
-    <label>Max search results</label>
-    <input type="number" id="bpm-option-search-limit">
+<div class="ui-form-item">
+    <h5 class="ui-form-title h5 margin-reset margin-bottom-8">Display</h5>
+    <div class="ui-flex flex-horizontal flex-justify-between flex-align-center flex-nowrap margin-bottom-20">
+        <div class="ui-flex flex-horizontal flex-justify-start flex-align-stretch flex-nowrap" style="flex: 0 1 auto;">
+            <h3 class="ui-form-title h3 margin-reset ui-flex-child">Show search button in the top right (requires restart)</h3>
+        </div>
+        <div class="ui-flex-child" style="flex: 0 1 auto;">
+            <label class="ui-switch-wrapper">
+                    <input class="ui-switch-checkbox" type="checkbox" data-bpmOption="searchButtonTopRight">
+                    <div class="ui-switch"></div>
+            </label>
+        </div>
+    </div>
+    <div class="ui-form-divider margin-top-20 margin-bottom-20" style="flex: 1 1 auto;"></div>
+    <h5 class="ui-form-title h5 margin-reset margin-bottom-8">Max search results</h5>
+    <div class="ui-text-input flex-vertical">
+        <input type="number" class="input" placeholder maxlength=999 id="bpm-option-search-limit">
+    </div>
 </div>
 

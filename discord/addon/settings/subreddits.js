@@ -19,45 +19,62 @@ function BPM_initSubreddits(subpanel) {
         var list = document.getElementById('bpm-subreddit-list');
         Object.keys(prefs.enabledSubreddits2).forEach(function(key) {
             list.appendChild(createCheckbox(key, prefs, !!prefs.enabledSubreddits2[key]));
+            
+            var separator = document.createElement('div');
+            separator.className = 'ui-form-divider margin-top-20 margin-bottom-20';
+            list.appendChild(separator);
         });
     }
     BPM_utils.retrievePrefs(initSubredditPrefs);
 }
 
 function createCheckbox(subredditName, prefs, checked) {
-    var li = document.createElement('li');
+    var outerDiv = document.createElement('div');
+    outerDiv.className = 'ui-flex flex-horizontal flex-justify-between flex-align-center flex-nowrap margin-bottom-20';
     
-    var checkboxDiv = document.createElement('div');
-    checkboxDiv.className = 'checkbox';
-    li.appendChild(checkboxDiv);
+    // Create the label
+    var headerDiv = document.createElement('div');
+    headerDiv.className = 'ui-flex flex-horizontal flex-justify-start flex-align-stretch flex-nowrap';
+    headerDiv.style.flex = '0 1 auto';
 
-    var checkboxInner = document.createElement('div');
-    checkboxInner.className = 'checkbox-inner';
-    checkboxDiv.appendChild(checkboxInner);
+    var headerText = document.createElement('h3');
+    headerText.className = 'ui-form-title h3 margin-reset ui-flex-child';
+    headerText.appendChild(document.createTextNode(subredditName));
+
+    headerDiv.appendChild(headerText);
+    outerDiv.appendChild(headerDiv);
+
+    //Create the switch
+    var checkboxWrapper = document.createElement('div');
+    checkboxWrapper.className = 'ui-flex-child';
+    checkboxWrapper.style.flex = '0 1 auto';
+    
+    var checkboxLabel = document.createElement('label');
+    checkboxLabel.className = 'ui-switch-wrapper';
 
     var checkboxInput = document.createElement('input');
+    checkboxInput.className = 'ui-switch-checkbox';
     checkboxInput.type = 'checkbox';
-    checkboxInner.appendChild(checkboxInput);
     checkboxInput.checked = checked;
 
-    var checkboxBlankSpan = document.createElement('span');
-    checkboxInner.appendChild(checkboxBlankSpan);
-    checkboxBlankSpan.addEventListener('click', createClickHandler(subredditName, checkboxInput, prefs));
+    var switchDiv = document.createElement('div');
+    switchDiv.className = 'ui-switch';
 
-    var checkboxLabel = document.createElement('span');
-    checkboxLabel.appendChild(document.createTextNode(subredditName));
-    checkboxDiv.appendChild(checkboxLabel);
-    return checkboxDiv;
+    checkboxWrapper.appendChild(checkboxLabel);
+    checkboxLabel.appendChild(checkboxInput);
+    checkboxLabel.appendChild(switchDiv);
+    outerDiv.appendChild(checkboxWrapper);
+    checkboxLabel.addEventListener('click', createClickHandler(subredditName, checkboxInput, prefs));
+
+    return outerDiv;
 }
 
 function createClickHandler(subredditName, inputElement, prefs) {
     var handler = function(e) {
-        e.preventDefault();
-        inputElement.checked = !inputElement.checked;
+        //e.preventDefault();
         var newValue = inputElement.checked ? 1 : 0;
         prefs.enabledSubreddits2[subredditName] = newValue;
         BPM_utils.setOption('enabledSubreddits2', prefs.enabledSubreddits2);
-        console.log('clicked on subreddit ' + subredditName);
     };
     return handler;
 }
@@ -66,7 +83,7 @@ function BPM_teardownSubreddits(subpanel) {
     var list = document.getElementById('bpm-subreddit-list');
     var inputs = BPM_utils.htmlCollectionToArray(list.getElementsByTagName('input'));
     inputs.forEach(function(input) {
-        input.nextElementSibling.removeEventListener('click');
+        input.parentNode.removeEventListener('click');
     });
 }
 

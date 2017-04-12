@@ -1,6 +1,6 @@
 /**
  * BPM for Discord
- * (c) 2015-2016 ByzantineFailure
+ * (c) 2015-2017 ByzantineFailure
  * 
  * Updates panel handlers.  Version number inserted
  * during the build process (see Makefile).  Also creates

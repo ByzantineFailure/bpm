@@ -19,11 +19,13 @@ cssMap['/extracss-pure.css'] = require('raw-loader!./extracss-pure.css');
 cssMap['/extracss-webkit.css'] = require('raw-loader!./extracss-webkit.css');
 
 function getChatInputTextarea() {
-    var sendbox = utils.getElementsByClassName('channel-text-area-default');
+    var sendbox = document.querySelector('.channel-text-area-default > [class*=inner] > textarea');
     if(sendbox.length === 0) {
         return null;
     }
-    return utils.htmlCollectionToArray(sendbox[0].getElementsByTagName('textarea'))[0];
+    else {
+        return sendbox ;
+    }
 }
 
 window.addEventListener('bpm_backend_message', function(event) {

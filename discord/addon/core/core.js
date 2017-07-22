@@ -19,7 +19,7 @@ cssMap['/extracss-pure.css'] = require('raw-loader!./extracss-pure.css');
 cssMap['/extracss-webkit.css'] = require('raw-loader!./extracss-webkit.css');
 
 function getChatInputTextarea() {
-    var sendbox = utils.getElementsByClassName('channel-textarea-inner');
+    var sendbox = utils.getElementsByClassName('channel-text-area-default');
     if(sendbox.length === 0) {
         return null;
     }

@@ -14,20 +14,14 @@ downloadNodeAndInstall() {
 }
 
 # return 0 if program version is equal or greater than check version
-check_version()
-{
-    local version=$1 check=$2
-    local winner=$(echo -e "$version\n$check" | sed '/^$/d' | sort -nr | head -1)
-    [[ "$winner" = "$version" ]] && return 0
-    return 1
-}
+function version_ge() { test "$(echo "$@" | tr " " "\n" | sort -rV | head -n 1)" == "$1"; }
 
 if [ -z $(which node) ]; then
     echo "Cannot find node"
     downloadNodeAndInstall
 else
-    NODE_VERSION=$(node --version)
-    if [[ check_version $NODE_VERSION "4.2" ]]; then
+    NODE_VERSION=$(node --version | cut -c2-) 
+    if version_ge $NODE_VERSION "4.2.0"; then
         echo "Found node, running with local version...";
         node "$DIR/index.js" "$DIR"
     else    
@@ -38,4 +32,3 @@ fi
 
 echo "Press enter to continue..."
 read BLANK
-

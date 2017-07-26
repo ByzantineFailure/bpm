@@ -35,6 +35,8 @@ downloadNodeAndInstall() {
     rm -f $DIR/node.tar.gz;
 }
 
+function version_ge() { test "$(echo "$@" | tr " " "\n" | sort -rV | head -n 1)" == "$1"; }
+
 # Confirm `curl` exists
 # Redirect stderr for command -v to stdout, redirect the error message to stderr.
 command -v curl >/dev/null 2>&1 || { echo 'curl is required to install BPM for Discord.  Please place its binary on your PATH and try again.' >&2; exit 1; }
@@ -43,9 +45,8 @@ if [ -z $(which node) ]; then
     echo "Cannot find node";
     downloadNodeAndInstall;
 else
-    NODE_VERSION=$(node --version);
-    #Test if node version is v4.2.* using regex
-    if [[ $NODE_VERSION =~ ^v4\.2\..* ]]; then
+    NODE_VERSION=$(node --version | cut -c2-) 
+    if version_ge $NODE_VERSION "4.2.0"; then
         echo "Found node, running with local version...";
         runInstaller "node";
     else    

@@ -63,12 +63,17 @@ function getDiscordPath(isPTB, isCanary, discordRoot) {
         case 'win32':
             baseLocation = path.join(process.env.APPDATA, localDataFolder);
             break;
-        // TODO:  Make this shit work for linux/mac
         case 'darwin':
             baseLocation = path.join(process.env.HOME, 'Library', 'Application Support', localDataFolder);
             break;
         case 'linux':
-            baseLocation = path.join(discordRoot, 'resources');
+            // slightly dangerous assumption: Discord obeys the XDG_CONFIG_HOME standard and doesn't
+            // just always install itself into ~/.config regardless
+            if (process.env.XDG_CONFIG_HOME) {
+                baseLocation = path.join(process.env.XDG_CONFIG_HOME, localDataFolder);
+            } else {
+                baseLocation = path.join(process.env.HOME, '.config', localDataFolder);
+            }
             break;
         default:
             throw new Error('Unsupported OS ' + OS);

@@ -31,7 +31,7 @@
 # - Test
 # - Make thread
 
-VERSION = 66.263
+VERSION = 66.264
 
 # Discord release process:
 # - Bump DISCORD_VERSION (format = discord-v[semantic version]-[alpha/beta/release])

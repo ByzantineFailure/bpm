@@ -42,7 +42,7 @@ VERSION = 66.264
 # - Flag pre-release as ready, edited and good to go 
 # - Notify interested parties
 
-DISCORD_VERSION = discord-v0.11.1-beta
+DISCORD_VERSION = discord-v0.11.2-beta
 DISCORD_RELEASE_BASE_BRANCH = discord
 GITHUB_API_HOST = https://api.github.com
 GITHUB_USER = ByzantineFailure

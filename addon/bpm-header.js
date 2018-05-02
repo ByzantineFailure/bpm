@@ -25,14 +25,12 @@
 
 //Discord requires that we require in our resources
 //This will be processed by webpack at build time
-if(window.process) {
-    var resources = require('./bpm-resources');
-    var tag_name2id = resources.tag_name2id;
-    var sr_id2name = resources.sr_id2name;
-    var sr_name2id = resources.sr_name2id;
-    var tag_id2name = resources.tag_id2name;
-    var emote_map = resources.emote_map;
-}
+var resources = require('./bpm-resources');
+var tag_name2id = resources.tag_name2id;
+var sr_id2name = resources.sr_id2name;
+var sr_name2id = resources.sr_name2id;
+var tag_id2name = resources.tag_id2name;
+var emote_map = resources.emote_map;
 
 var _checkpoint = (function() {
     var _start_time = Date.now(); // Grab this value before we do ANYTHING else

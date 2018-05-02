@@ -79,27 +79,7 @@ if(_console && _console.trace) {
  * best guess, made by inspecting global variables, and needed because this
  * script runs unmodified on all supported platforms.
  */
-var platform;
-// FIXME: "self" is a standard object, though self.on is specific to
-// Firefox content scripts. I'd prefer something a little more clearly
-// affiliated, though.
-if(self.on) {
-    platform = "firefox-ext";
-} else if(find_global("chrome") && chrome.runtime) {
-    platform = "chrome-ext"; // AKA webext
-} else if(find_global("safari") && window.name === "") {
-    platform = "safari-ext";
-} else if (window.process) {
-    platform = "discord-ext";
-} else {
-    log_error("Unknown platform! Your installation is badly broken.");
-    platform = "unknown";
-    // may as well just die at this point; nothing will actually work
-    // For some reason Safari doesn't behave properly when frames get involved.
-    // I'll continue to investigate, but for now it will just have to keep
-    // spitting out errors for each frame in the document.
-}
-
+var platform = "discord-ext";
 log_debug("Platform:", platform);
 
 /*
